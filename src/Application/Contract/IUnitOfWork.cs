@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Domain.Common;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,8 @@ namespace Application.Contract
 {
     public interface IUnitOfWork
     {
+        DbContext context { get; }
+        Task<int> Save(CancellationToken cancellationToken);
+        IGenericRepository<T> Repository<T>() where T : BaseEntity;
     }
 }

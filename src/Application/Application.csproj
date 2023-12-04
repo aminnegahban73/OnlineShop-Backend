@@ -13,7 +13,8 @@
   <ItemGroup>
     <Folder Include="Common\" />
     <Folder Include="Dtos\" />
-    <Folder Include="Features\Product\Commands\" />
+    <Folder Include="Features\Products\Commands\" />
+    <Folder Include="Features\Products\Validators\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
 

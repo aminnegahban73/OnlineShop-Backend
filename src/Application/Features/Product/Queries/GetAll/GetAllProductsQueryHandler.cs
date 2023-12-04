@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Product.Queries.GetAll
 {
-    internal class GetAllProductsQueryHandler
+    public class GetAllProductsQueryHandler
     {
     }
 }

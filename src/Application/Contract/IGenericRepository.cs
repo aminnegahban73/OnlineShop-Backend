@@ -14,7 +14,7 @@ namespace Application.Contract
         Task<IReadOnlyCollection<T>> GetAllAsync(CancellationToken cancellationToken);
         Task<T> AddAsync(T entity, CancellationToken cancellationToken);
         Task<T> UpdateAsync(T entity, CancellationToken cancellationToken);
-        void Delete(T entity, CancellationToken cancellationToken);
+        Task DeleteAsync(T entity, CancellationToken cancellationToken);
         
         //Expression x=>x.Id
         IQueryable<T> Where(Expression<Func<T, bool>> expression);

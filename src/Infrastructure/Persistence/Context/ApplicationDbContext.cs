@@ -20,6 +20,11 @@ namespace Infrastructure.Persistence.Context
 
             // Finds all classes on this assembly (Infrastructure) which implement "IEntityTypeConfiguration" and put them here
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            
+            // If IsDelete is true, continue.
+            modelBuilder.Entity<Product>().HasQueryFilter(p => !p.IsDelete);
+            modelBuilder.Entity<ProductType>().HasQueryFilter(p => !p.IsDelete);
+            modelBuilder.Entity<ProductBrand>().HasQueryFilter(p => !p.IsDelete);
         }
     }
 

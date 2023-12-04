@@ -44,15 +44,13 @@ namespace Infrastructure.Persistence
             return await Task.FromResult(entity);
         }
 
-        public void DeleteAsync(T entity, CancellationToken cancellationToken)
+        public async Task DeleteAsync(T entity, CancellationToken cancellationToken)
         {
-            _dbSet.Remove(entity);
+            var record = await GetByIdAsync(entity.Id, cancellationToken);
+            record.IsDelete = true;
+            await UpdateAsync(record, cancellationToken);
         }
 
-        public void Delete(T entity, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
 
         //
         public async Task<bool> AnyAsync(CancellationToken cancellationToken)

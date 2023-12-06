@@ -10,6 +10,7 @@ namespace Application
         {
             //services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
         }
     }
 }

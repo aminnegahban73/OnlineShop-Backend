@@ -1,14 +1,11 @@
-﻿using Application.Dtos.Common;
+﻿using Application.Common.Mapping;
+using Application.Dtos.Common;
+using AutoMapper;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Dtos.Products
 {
-    public class ProductDto : CommandDto
+    public class ProductDto : CommandDto, IMapFrom<Product>
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -18,5 +15,12 @@ namespace Application.Dtos.Products
         public int ProductBrandId { get; set; }
         public string ProductType { get; set; }   // Title
         public string ProductBrand { get; set; }  // Title
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Product, ProductDto>()
+                .ForMember(p => p.ProductType, c => c.MapFrom(m => m.ProductType.Title))
+                .ForMember(p => p.ProductBrand, c => c.MapFrom(m => m.ProductBrand.Title));
+        }
     }
 }

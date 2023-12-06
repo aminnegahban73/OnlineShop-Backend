@@ -6,7 +6,8 @@ namespace Application.Contract.Specification
     public class BaseSpecification<T> : ISpecification<T> where T : BaseEntity
     {
         public Expression<Func<T, bool>> Predicate { get; }
-        public List<Expression<Func<T, object>>> Includes => new();
+        public List<Expression<Func<T, object>>> Includes { get; } = new();
+
 
         public BaseSpecification() { }
 
@@ -15,7 +16,7 @@ namespace Application.Contract.Specification
             Predicate = criteria;
         }
 
-        protected void AddIncludes(Expression<Func<T, object>> include)
+        protected void AddInclude(Expression<Func<T, object>> include)
         {
             Includes.Add(include);
         }

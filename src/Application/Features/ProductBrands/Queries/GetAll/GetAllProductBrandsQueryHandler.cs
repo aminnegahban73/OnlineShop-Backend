@@ -1,11 +1,7 @@
 ﻿using Application.Contract;
+using Application.Contract.Specification;
 using Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.ProductBrands.Queries.GetAll
 {
@@ -20,7 +16,9 @@ namespace Application.Features.ProductBrands.Queries.GetAll
 
         public async Task<IEnumerable<ProductBrand>> Handle(GetAllProductBrandsQuery request, CancellationToken cancellationToken)
         {
-            return await _unitOfWork.Repository<ProductBrand>().GetAllAsync(cancellationToken);
+            var spec = new GetAllProductBrandsSpec();
+            return await _unitOfWork.Repository<ProductBrand>().ListAsyncSpec(spec, cancellationToken);
+            //return await _unitOfWork.Repository<ProductBrand>().GetAllAsync(cancellationToken);
         }
     }
 }

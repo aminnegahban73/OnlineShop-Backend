@@ -1,10 +1,6 @@
-﻿using Domain.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Application.Contract.Specification;
+using Domain.Common;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Contract
 {
@@ -20,5 +16,9 @@ namespace Application.Contract
         IQueryable<T> Where(Expression<Func<T, bool>> expression);
         Task<bool> AnyAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken);
         Task<bool> AnyAsync(CancellationToken cancellationToken);
+
+        //Specification
+        Task<T> GetEntityWithSpec(ISpecification<T> spec, CancellationToken cancellationToken);
+        Task<IReadOnlyList<T>> ListAsyncSpec(ISpecification<T> spec, CancellationToken cancellationToken);
     }
 }

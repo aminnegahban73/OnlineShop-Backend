@@ -1,4 +1,5 @@
 ﻿using Application.Contract;
+using Application.Contract.Specification;
 using Domain.Common;
 using Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
@@ -68,6 +69,19 @@ namespace Infrastructure.Persistence
             return _dbSet.Where(expression);
         }
 
+        public async Task<T> GetEntityWithSpec(ISpecification<T> spec, CancellationToken cancellationToken)
+        {
+            return await ApplySpecification(spec).FirstOrDefaultAsync(cancellationToken);
+        }
 
+        public async Task<IReadOnlyList<T>> ListAsyncSpec(ISpecification<T> spec, CancellationToken cancellationToken)
+        {
+            return await ApplySpecification(spec).ToListAsync(cancellationToken);
+        }
+
+        private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+        {
+            return SpecificationEvaluator<T>.GetQuery(_dbSet.AsQueryable(), spec);
+        }
     }
 }

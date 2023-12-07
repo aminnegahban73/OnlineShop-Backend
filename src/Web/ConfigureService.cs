@@ -12,6 +12,9 @@ namespace Web
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            // Cache Memory
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddHttpContextAccessor();
 
             return builder.Services;
         }

@@ -47,7 +47,6 @@ namespace Web
             }
 
             app.UseAuthorization();
-
             app.MapControllers();
 
             //await app.RunAsync();

@@ -1,4 +1,5 @@
 ﻿using Application.Common.Mapping;
+using Application.Common.Mapping.Resolver;
 using Application.Dtos.Common;
 using AutoMapper;
 using Domain.Entities;
@@ -20,7 +21,8 @@ namespace Application.Dtos.Products
         {
             profile.CreateMap<Product, ProductDto>()
                 .ForMember(p => p.ProductType, c => c.MapFrom(m => m.ProductType.Title))
-                .ForMember(p => p.ProductBrand, c => c.MapFrom(m => m.ProductBrand.Title));
+                .ForMember(p => p.ProductBrand, c => c.MapFrom(m => m.ProductBrand.Title))
+                .ForMember(p => p.ImageUrl, c => c.MapFrom<ProductImageUrlResolver>());
         }
     }
 }

@@ -10,5 +10,10 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.AddWebConfigureServices();
 // App Builder
 var app = builder.Build();
+// Access To wwwroot
+app.UseStaticFiles();
+
+
 await app.AddWebAppServices();
+
 //await app.AddWebAppServices().ConfigureAwait(false);

@@ -11,9 +11,9 @@ namespace Application.Contract.Specification
 
         public BaseSpecification() { }
 
-        public BaseSpecification(Expression<Func<T, bool>> criteria)
+        public BaseSpecification(Expression<Func<T, bool>> predicate)
         {
-            Predicate = criteria;
+            Predicate = predicate;
         }
 
         protected void AddInclude(Expression<Func<T, object>> include)

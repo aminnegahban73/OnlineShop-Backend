@@ -25,7 +25,9 @@ namespace Infrastructure.Persistence
 
         public async Task<T> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await _dbSet.FindAsync(id, cancellationToken);
+            var a = await _dbSet.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+            return a;
         }
 
         public async Task<IReadOnlyCollection<T>> GetAllAsync(CancellationToken cancellationToken)

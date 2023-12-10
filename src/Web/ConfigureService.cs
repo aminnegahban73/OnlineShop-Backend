@@ -1,6 +1,9 @@
-﻿using Infrastructure.Persistence.Context;
+﻿using Domain.Exceptions;
+using Infrastructure.Persistence.Context;
 using Infrastructure.Persistence.SeedData;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace Web
 {
@@ -10,6 +13,7 @@ namespace Web
         {
             // Add services to the container.
             builder.Services.AddControllers();
+            ApiBehaviorOptions(builder);
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             // Cache Memory
@@ -19,6 +23,21 @@ namespace Web
             return builder.Services;
         }
 
+        private static void ApiBehaviorOptions(WebApplicationBuilder builder)
+        {
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    var errors = actionContext.ModelState
+                    .Where(e => e.Value.Errors.Count > 0)
+                    .SelectMany(v => v.Value.Errors)
+                    .Select(c => c.ErrorMessage).ToList();
+
+                    return new BadRequestObjectResult(new ApiToReturn((int)HttpStatusCode.BadRequest, errors));
+                };
+            });
+        }
 
         public static async Task<IApplicationBuilder> AddWebAppServices(this WebApplication app)
         {

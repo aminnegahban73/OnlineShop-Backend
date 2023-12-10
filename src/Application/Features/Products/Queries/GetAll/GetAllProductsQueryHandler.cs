@@ -19,12 +19,10 @@ namespace Application.Features.Products.Queries.GetAll
 
         public async Task<IEnumerable<ProductDto>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
-            var spec = new GetAllProductsSpec();
+            var spec = new GetAllProductsSpec(request);
             var result =  await _unitOfWork.Repository<Product>().ListAsyncSpec(spec, cancellationToken);
-            return _mapper.Map<IEnumerable<ProductDto>>(result);
             
-            //return await _unitOfWork.Repository<Product>().GetAllAsync(cancellationToken);
-
+            return _mapper.Map<IEnumerable<ProductDto>>(result);
         }
     }
 }

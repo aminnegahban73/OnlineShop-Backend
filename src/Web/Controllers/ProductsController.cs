@@ -9,9 +9,9 @@ namespace Web.Controllers
     public class ProductsController : BaseApiController
     {
         [HttpGet]
-        public async Task<IActionResult> Get(CancellationToken cancellationToken)
+        public async Task<IActionResult> Get([FromQuery] GetAllProductsQuery request, CancellationToken cancellationToken)
         {
-            return Ok(await Mediator.Send(new GetAllProductsQuery(), cancellationToken));
+            return Ok(await Mediator.Send(request, cancellationToken));
         }
 
         [HttpGet("{id:int}")]

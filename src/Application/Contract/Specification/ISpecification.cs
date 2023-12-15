@@ -10,5 +10,9 @@ namespace Application.Contract.Specification
 
         Expression<Func<T, object>> OrderBy { get; }
         Expression<Func<T, object>> OrderByDesc  { get; }
+
+        public int Skip { get; set; }
+        public int Take { get; set; }
+        public bool IsPagingEnable { get; set; }
     }
 }

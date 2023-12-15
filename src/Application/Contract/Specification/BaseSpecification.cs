@@ -9,6 +9,9 @@ namespace Application.Contract.Specification
         public List<Expression<Func<T, object>>> Includes { get; } = new();
         public Expression<Func<T, object>> OrderBy { get; private set; }
         public Expression<Func<T, object>> OrderByDesc { get; private set; }
+        public int Skip { get; set; }
+        public int Take { get; set; }
+        public bool IsPagingEnable { get; set; } = true;
 
 
         public BaseSpecification() { }
@@ -31,6 +34,13 @@ namespace Application.Contract.Specification
         protected void AddOrderByDesc(Expression<Func<T, object>> orderByDescExpression)
         {
             OrderByDesc = orderByDescExpression;
+        }
+
+        protected void ApplyPaging(int skip, int take, bool isPagingEnable)
+        {
+            Skip = skip;
+            Take = take;
+            IsPagingEnable = isPagingEnable;
         }
     }
 }

@@ -4,12 +4,13 @@ using Infrastructure.Persistence.SeedData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using Web.Middleware;
 
 namespace Web
 {
     public static class ConfigureService
     {
-        public static IServiceCollection AddWebConfigureServices(this WebApplicationBuilder builder)
+        public static IServiceCollection AddWebConfigureServices(this WebApplicationBuilder builder, IConfiguration configuration)
         {
             // Add services to the container.
             builder.Services.AddControllers();
@@ -18,7 +19,18 @@ namespace Web
             builder.Services.AddSwaggerGen();
             // Cache Memory
             builder.Services.AddDistributedMemoryCache();
+            // I HttpContext Accessor
             builder.Services.AddHttpContextAccessor();
+            // CORS Policy
+            builder.Services.AddCors(opton =>
+            {
+                opton.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(
+                        configuration["CorsAddress:HttpAddress"],
+                        configuration["CorsAddress:HttpsAddress"]);
+                });
+            });
 
             return builder.Services;
         }
@@ -41,6 +53,9 @@ namespace Web
 
         public static async Task<IApplicationBuilder> AddWebAppServices(this WebApplication app)
         {
+            // Should be placed on the top due to will run at the end when error ocurred.
+            app.UseMiddleware<ExceptionsHandlerMiddleware>();
+            
             // Add Scope
             var scope = app.Services.CreateScope();
             var service = scope.ServiceProvider;
@@ -67,10 +82,14 @@ namespace Web
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            // Access To wwwroot
+            app.UseStaticFiles();
+            // CORS
+            app.UseCors("CorsPolicy");
+            app.UseRouting();
 
             app.UseAuthorization();
             app.MapControllers();
-
             //await app.RunAsync();
             app.Run();
 

@@ -81,6 +81,11 @@ namespace Infrastructure.Persistence
             return await ApplySpecification(spec).ToListAsync(cancellationToken);
         }
 
+        public async Task<int> CountAsyncSpec(ISpecification<T> spec, CancellationToken cancellationToken)
+        {
+            return await ApplySpecification(spec).CountAsync(cancellationToken);
+        }
+
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
             return SpecificationEvaluator<T>.GetQuery(_dbSet.AsQueryable(), spec);

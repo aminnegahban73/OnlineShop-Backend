@@ -10,7 +10,7 @@ namespace Application.Wrappers
     {
         private const int _MaxPageSize = 50;
         private int _PageIndex = 1;
-        private int _PageSize = 12;
+        private int _PageSize = 10;
 
         public int PageSize
         {

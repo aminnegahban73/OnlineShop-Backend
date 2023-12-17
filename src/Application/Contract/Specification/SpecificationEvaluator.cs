@@ -12,14 +12,14 @@ namespace Application.Contract.Specification
             if (specification.Predicate is not null)
                 query = query.Where(specification.Predicate);
 
-            if (specification.Includes.Any())
-                query = specification.Includes.Aggregate(query, (current, value) => current.Include(value));
-
             if (specification.OrderBy is not null)
                 query = query.OrderBy(specification.OrderBy);
 
             if (specification.OrderByDesc is not null)
                 query = query.OrderByDescending(specification.OrderByDesc);
+
+            if (specification.Includes.Any())
+                query = specification.Includes.Aggregate(query, (current, value) => current.Include(value));
 
             if (specification.IsPagingEnable)
                 query = query.Skip(specification.Skip).Take(specification.Take);

@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Application.Features.Products.Queries.GetAll
 {
-    public class GetAllProductsQuery : RequestParametersBasic, IRequest<IEnumerable<ProductDto>>, ICacheQuery
+    public class GetAllProductsQuery : RequestParametersBasic, IRequest<PaginationResponse<ProductDto>>, ICacheQuery
     {
         public int PageId { get; set; }
         public int? TypeId { get; set; }

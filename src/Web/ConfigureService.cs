@@ -22,13 +22,14 @@ namespace Web
             // I HttpContext Accessor
             builder.Services.AddHttpContextAccessor();
             // CORS Policy
-            builder.Services.AddCors(opton =>
+            builder.Services.AddCors(option =>
             {
-                opton.AddPolicy("CorsPolicy", policy =>
+                option.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(
-                        configuration["CorsAddress:HttpAddress"],
-                        configuration["CorsAddress:HttpsAddress"]);
+                    policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                    //.WithOrigins(
+                    //    configuration["CorsAddress:HttpAddress"] ?? string.Empty,
+                    //    configuration["CorsAddress:HttpsAddress"] ?? string.Empty);
                 });
             });
 
